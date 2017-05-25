@@ -1,0 +1,6 @@
+.nav-icon {
+    -webkit-align-self: center;
+    align-self: center;
+    -webkit-align-self: stretch;  align-self: stretch;
+    line-height:48px; padding-left:13px; padding-right:13px;
+}

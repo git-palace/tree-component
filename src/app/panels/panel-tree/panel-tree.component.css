@@ -1,0 +1,24 @@
+.hover_box:hover {
+    border: 1px solid  #00a5cc !important;
+}
+
+
+.node-wrapper {
+
+    width: 100%;
+    height: 40px;
+    margin: 0px;
+    background-color: white;
+    border-radius:2px;
+    border: 1px solid #ddd;
+}
+
+.node-content-wrapper {
+
+    width: 100%;
+    height: 40px;
+    margin: 0px;
+    background-color: white;
+    border-radius:2px;
+    border: 1px solid #ddd;
+}

@@ -1,0 +1,4 @@
+<ng-container [ngSwitch]="panel.panelType">
+  <app-panel-tree *ngSwitchCase="PanelType.Tree" [panel]="panel"></app-panel-tree>
+  <div *ngSwitchDefault>no panel?</div>
+</ng-container>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataService }       from '../../data.service';
+import { DataService } from '../../data.service';
 import { NotificationService } from '../../notification.service';
 
 declare var EditorManager: any;
@@ -11,71 +11,48 @@ declare var EditorManager: any;
 })
 export class ValueRowComponent implements OnInit {
 
-  @Input() model:any;
-  @Input() level:number;
+  @Input() model: any;
+  @Input() level: number;
 
-  isActive:boolean = false;
+  isActive: boolean = false;
 
-  constructor(private dataService:DataService, private notificationService:NotificationService) { }
+  constructor(private dataService: DataService, private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.isActive = false;
   }
 
+  onDrop(event) {
+    const dragged_id = event['dropData'];
 
-  onDrop(event)
-  {
-    //console.log('onDrop');
-    //console.log(event);
+    if (dragged_id != this.model.model_id) {
+      // this.notificationService.onRowsChange({ a: dragged_id, b: this.model.model_id });
+      this.dataService.move_node(event['dropData'], this.model.model_id)
+    }
   }
 
-
-  onDragEnter(event)
-  {
-    //console.log('onDragEnter');
+  onDragEnter(event) {
     const dragged_id = event['dropData'];
-    //console.log(event);
-    //console.log(event);
 
-    if (dragged_id != this.model.model_id)
-    {
-       //console.log(dragged_id + ' switch with ' + this.model.model_id;
-
-       //console.log(node1);
-       //console.log(node2);
-
-       this.notificationService.onRowsChange({a: dragged_id, b: this.model.model_id});
-
+    if (dragged_id != this.model.model_id) {
+      // this.notificationService.onRowsChange({ a: dragged_id, b: this.model.model_id });
+      // this.dataService.move_node(event['dropData'], this.model.model_id)
     }
 
   }
 
-  onDragLeave(event)
-  {
-    //console.log('onDragLeave');
-    //console.log(event);
-  }
-  
-  onDragOver(event)
-  {
-    //console.log('onDragOver');
-    //console.log(event);
+  onDragLeave(event) {
   }
 
+  onDragOver(event) {
+  }
 
-  onMouseDown(event)
-  {
-    console.log('onMouseDown');
-    //this.model['isActive'] = true;
-
+  onMouseDown(event) {
+    event.stopPropagation()
     this.isActive = true;
   }
 
-  onMouseUp(event)
-  {
-    //console.log('onMouseUp');
-    //this.model['isActive'] = false;
-
+  onMouseUp(event) {
     this.isActive = false;
   }
 

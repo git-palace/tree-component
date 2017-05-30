@@ -16,6 +16,8 @@ export class ValueRowComponent implements OnInit {
 
   isActive: boolean = false;
 
+  isExpand: any = 1;
+
   constructor(private dataService: DataService, private notificationService: NotificationService) { }
 
   ngOnInit() {
@@ -56,4 +58,39 @@ export class ValueRowComponent implements OnInit {
     this.isActive = false;
   }
 
+  removeNode() {
+    this.dataService.remove_node_from_nodes(this.model.model_id, this.dataService.get_all_nodes())
+  }
+
+  addNewNode() {
+    let new_node = {
+        'base_class_id': this.model.base_class_id,
+        'children_id': Math.floor(Math.random()*1000) + '',
+        'class_id': this.model.class_id,
+        'class_name': this.model.class_name,
+        'data_hint': 'Object',
+        'data_type':'Object',
+        'date_created': '',
+        'date_modified': '',
+        'icon': 'icon_layer.gif',
+        'is_system': '1',
+        'model_id': Math.floor(Math.random()*1000) + '',
+        'parent_id': this.model.children_id,
+        'nodes': []
+    }
+    
+    this.dataService.add_new_node(this.model.model_id, new_node, this.dataService.get_all_nodes())
+  }
+
+  onToggle() {
+    this.isExpand = 1 - this.isExpand
+  }
+
+  expand() {
+    this.isExpand = 1
+  }
+
+  collapse() {
+    this.isExpand = 0
+  }
 }

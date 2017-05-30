@@ -109,6 +109,23 @@ export class DataService {
       return false
   }
 
+  add_new_node(container_id, new_node, node_arr) {
+    for (let node of node_arr) {
+        if (node['model_id'] == container_id) {
+            if (!node.hasOwnProperty('nodes'))
+                node.nodes = []
+            node.nodes.push(new_node)
+        } else if (node.hasOwnProperty('nodes')) {
+            let is_found = this.add_new_node(container_id, new_node, node.nodes)
+
+            if (is_found)
+                return is_found
+        }
+    }
+
+    return false
+  }
+
   move_node(move_id, container_id) {
       this.remove_node_from_nodes(move_id, this.get_all_nodes())
       this.add_node_to_nodes(container_id, this.remove_node, this.get_all_nodes())

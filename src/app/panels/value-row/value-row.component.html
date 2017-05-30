@@ -5,11 +5,51 @@
             <div style="width:auto; border-radius:10px; height:34px;">
                 <div style="display: flex; align-items: center; height:34px; justify-content: left; z-index: 1; margin: 0px; background-color: white; width: 100%;  border-radius:10px; border: 1px solid  #ddd;" class="hover_box" mwlDroppable (drop)="onDrop($event)" (dragEnter)="onDragEnter($event)"
                     (dragLeave)="onDragLeave($event)" (dragOver)="onDragOver($event)">
-                    <img src="../assets/gfx/icons/{{model.icon}}" style="max-height:14px; padding-bottom:10px;" *ngIf="model.icon != ''"><span style="color: #3c4049; font-size:15px;"><a (click)="dataService.loadModelPanel({model_id: model.model_id, panelType: PanelType.Grid, display:'replace'})">{{model.class_name}},  id :{{model.model_id}}</a></span>
+                    <span style="
+                        color: #3c4049;
+                        font-size: 15px;
+                        margin: 0 5px;
+                        padding: 8px;
+                        border: 1px solid #aaa;
+                        border-radius: 4px;">
+                        <a *ngIf="isExpand" (click)="collapse()">Collapse</a>
+                        <a *ngIf="!isExpand" (click)="expand()"> Expand </a>
+                    </span>
+                    <span style="
+                        color: #3c4049;
+                        font-size: 15px;
+                        margin: 0 5px;
+                        padding: 8px;
+                        border: 1px solid #aaa;
+                        border-radius: 4px;">
+                        <a (click)="onToggle()">T</a>
+                    </span>
+                    <img src="../assets/gfx/icons/{{model.icon}}" style="max-height:14px; padding-bottom:10px;" *ngIf="model.icon != ''">
+                    <span style="color: #3c4049; font-size:15px;">
+                        <a (click)="dataService.loadModelPanel({model_id: model.model_id, panelType: PanelType.Grid, display:'replace'})">{{model.class_name}},  id :{{model.model_id}}</a>
+                    </span>
+                    <span style="
+                        color: #3c4049;
+                        font-size: 15px;
+                        margin: 0 5px;
+                        padding: 8px;
+                        border: 1px solid #aaa;
+                        border-radius: 4px;">
+                        <a (click)="addNewNode()">Add</a>
+                    </span>
+                    <span style="
+                        color: #3c4049;
+                        font-size: 15px;
+                        margin: 0 5px;
+                        padding: 8px;
+                        border: 1px solid #aaa;
+                        border-radius: 4px;">
+                        <a (click)="removeNode()">Del</a>
+                    </span>
                 </div>
             </div>
 
-            <div *ngIf="model.nodes.length > 0" style="margin-top:15px;">
+            <div *ngIf="model.nodes.length > 0 && isExpand == true" style="margin-top:15px;">
                 <app-value-row *ngFor="let row of model.nodes" [model]="row" [level]="level+1"></app-value-row>
             </div>
         </div>

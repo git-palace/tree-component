@@ -2,9 +2,10 @@
     <div style="margin-bottom: 8px;" [style.margin-left]="5 + level * 10 + 'px'" align="center">
 
         <div style="background-color: #DDDDDD; width:auto; height: auto; border-radius:10px; margin-bottom: 15px;" align="center" mwlDraggable (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" dropData="{{model.model_id}}">
-            <div style="width:auto; border-radius:10px; height:34px;">
-                <div style="display: flex; align-items: center; height:34px; justify-content: left; z-index: 1; margin: 0px; background-color: white; width: 100%;  border-radius:10px; border: 1px solid  #ddd;" class="hover_box" mwlDroppable (drop)="onDrop($event)" (dragEnter)="onDragEnter($event)"
-                    (dragLeave)="onDragLeave($event)" (dragOver)="onDragOver($event)">
+            <div style="width:auto; border-radius:10px; ">
+
+                <div class="drop-zone top" [style.background-color]="isReplace == 1 ? '#aaa' : 'white'" mwlDroppable (drop)="onDrop($event, false)" (dragEnter)="onDragEnter($event)" (dragLeave)="onDragLeave($event)" (dragOver)="onDragOver($event)"></div>
+                <div class="hover_box" [style.background-color]="isReplace == 1 ? '#aaa' : 'white'" mwlDroppable (drop)="onDrop($event)" (dragEnter)="onDragEnter($event)" (dragLeave)="onDragLeave($event)" (dragOver)="onDragOver($event)">
                     <span style="
                         color: #3c4049;
                         font-size: 15px;

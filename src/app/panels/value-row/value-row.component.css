@@ -1,0 +1,33 @@
+.hover_box {
+    align-items: center;
+    justify-content: left;
+    z-index: 1;
+    margin: 0px;
+    width: 100%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid rgb(221, 221, 221);
+    padding-bottom: 20px;
+    border-top: none;
+}
+
+.hover_box * {
+    height: 0
+}
+
+.drop-zone {
+    height: 20px!important;
+    left: 0;
+    right: 0;
+    border: 1px solid green;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid rgb(221, 221, 221);
+    border-bottom: none;
+    width: 100%;
+}
+
+.drop-zone.top {
+    top: -5px;
+    bottom: 20px;
+}

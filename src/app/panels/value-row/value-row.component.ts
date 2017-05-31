@@ -18,18 +18,34 @@ export class ValueRowComponent implements OnInit {
 
   isExpand: any = 1;
 
+  isReplace: any = 0;
+
   constructor(private dataService: DataService, private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.isActive = false;
   }
 
-  onDrop(event) {
+  onDrop(event, child = true) {
     const dragged_id = event['dropData'];
 
     if (dragged_id != this.model.model_id) {
       // this.notificationService.onRowsChange({ a: dragged_id, b: this.model.model_id });
-      this.dataService.move_node(event['dropData'], this.model.model_id)
+      if (child) {
+        this.dataService.move_node(dragged_id, this.model.model_id)
+      } else {
+        this.dataService.move_to_before(dragged_id, this.model.model_id)
+      }
+    } else if (this.isReplace == 1) {
+      let parent_node = this.dataService.get_parent_node_from_child_id(this.model.parent_id)
+      parent_node = this.dataService.get_parent_node_from_child_id(parent_node.parent_id)
+      
+      if (parent_node) {
+        this.dataService.move_node(this.model.model_id, parent_node.model_id)
+      } else {
+        this.dataService.move_to_root_tree(this.model.model_id)
+      }
+      this.isReplace = 0
     }
   }
 
@@ -37,16 +53,25 @@ export class ValueRowComponent implements OnInit {
     const dragged_id = event['dropData'];
 
     if (dragged_id != this.model.model_id) {
+      this.isReplace = 0
       // this.notificationService.onRowsChange({ a: dragged_id, b: this.model.model_id });
       // this.dataService.move_node(event['dropData'], this.model.model_id)
+    } else {
+      if (this.model == this.dataService.get_last_child_node(this.model.parent_id))
+        this.isReplace = 1 - this.isReplace
     }
 
   }
 
   onDragLeave(event) {
+    this.isReplace = 0
   }
 
   onDragOver(event) {
+    const dragged_id = event['dropData'];
+    if (dragged_id != this.model.model_id) {
+    } else {
+    }
   }
 
   onMouseDown(event) {
@@ -64,21 +89,21 @@ export class ValueRowComponent implements OnInit {
 
   addNewNode() {
     let new_node = {
-        'base_class_id': this.model.base_class_id,
-        'children_id': Math.floor(Math.random()*1000) + '',
-        'class_id': this.model.class_id,
-        'class_name': this.model.class_name,
-        'data_hint': 'Object',
-        'data_type':'Object',
-        'date_created': '',
-        'date_modified': '',
-        'icon': 'icon_layer.gif',
-        'is_system': '1',
-        'model_id': Math.floor(Math.random()*1000) + '',
-        'parent_id': this.model.children_id,
-        'nodes': []
+      'base_class_id': this.model.base_class_id,
+      'children_id': Math.floor(Math.random() * 1000) + '',
+      'class_id': this.model.class_id,
+      'class_name': this.model.class_name,
+      'data_hint': 'Object',
+      'data_type': 'Object',
+      'date_created': '',
+      'date_modified': '',
+      'icon': 'icon_layer.gif',
+      'is_system': '1',
+      'model_id': Math.floor(Math.random() * 1000) + '',
+      'parent_id': this.model.children_id,
+      'nodes': []
     }
-    
+
     this.dataService.add_new_node(this.model.model_id, new_node, this.dataService.get_all_nodes())
   }
 
